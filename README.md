@@ -29,17 +29,27 @@ For more details on the journey and design decisions, see the [pico-mac-nano pro
 
 ## PCB files
 
-The PCB directory contains all the gerber, drill hole, position and BOM files for the most recent revision of the PCB. These are as supplied to [JLC pcb]([https://blog.1bitrainbow.com/pico-mac-nano/](https://jlcpcb.com)). The format of BOM and position files may need to modified for other PCB manufacturers. JLC pcb can produce the bare board, the board with all SMC pre-fitted, or as we have, fully assembled with both SMC and through-hole components.
+The PCB folder contains all the gerber, drill hole, position and BOM files for the most recent revision of the PCB. These are as supplied to [JLC pcb]([https://blog.1bitrainbow.com/pico-mac-nano/](https://jlcpcb.com)). The format of BOM and position files may need to modified for other PCB manufacturers. JLC pcb can produce the bare board, the board with all SMC pre-fitted, or as we have, fully assembled with both SMC and through-hole components.
 
 ## 3D files
 
-The 3D_model directory contains the .stl files for 3D printing the case, battery power module and box inserts (for a 75mm cube box). The case is comprised of the front housing, rear housing, switch blank (blocks the switch apperture intended for the [battery power module](https://www.1bitrainbow.com/parts-store.php?cPath=972_973_P4470)) and reset/boot select button actuator. The battery module comprises upper and lower halves and the rocker switch. The box folder contains the top and bottom insert files and the two halves of the accessory box.
+The 3D_model folder contains the .stl files for 3D printing the case, battery power module and box inserts (for a 75mm cube box). The case is comprised of the front housing, rear housing, switch blank (blocks the switch apperture intended for the [battery power module](https://www.1bitrainbow.com/parts-store.php?cPath=972_973_P4470)) and reset/boot select button actuator. The battery module comprises upper and lower halves and the rocker switch. The box folder contains the top and bottom insert files and the two halves of the accessory box.
+
+## Firmware Files
+
+The firmware folder contains pre-built .uf2 rp2040 firmware files for the Pico Zero. This includes version 3.2 built with the standard 128K RAM (this is the version used on all pre-assembled & kit form pico-mac-nanos shipped to date). Version 19 no longer uses my hacked Mac Plus ROM. Instead it adopts the newer pico-mac code to patch the ROM to the desired screen resolution based on the build parameters. It is also built with the 208K RAM option which allows it to run MacPaint, but only when booted from a disk image on a micro-SD card. This is because the disk image contained in the pico-mac-nano firmware is read-only anbd MacPaint requires a writeable disk.
+
+## Disk Images
+
+The disk_images folder contains writeable disk image files (.img) files for booting pico-mac-nano from a micro-SD card. Copy one of them to an ExFAT formatted micro-SD card (If you want to change the file name, make sure it still starts with "umac0") then with your pico-mac-nano powered down, insert the card into the slot on the rear (The card must be upside down due to the orientation of the SD board). When you power up, it should detect the SD card and the boot image, and boot from that instead of the built in disk image. This disk image is writeable so unlike the built in disk image, any changes made to the contents of the disk while booted from it will remain. This is good in that you can save files you worked on, plus some applications like MacPaint require a writeable boot disk to run, but it also means it can become corrupted during a system crash.
+
+The version 1 file is a 10MB .img version of the built in .dsk disk image used in all pico-mac-nanos shipped to date. Subsequent versions add more applications, utilities and games which have been found to broadly work within pico-mac.
 
 ## Other folders
 
-The firmware directory contains pre-built .uf2 rp2040 firmware files for the Pico Zero. This includes version 3.2 built with the standard 128K RAM (this is the version used on all pre-assembled & kit form pico-mac-nanos shipped to date). Version 19 no longer uses my hacked Mac Plus ROM. Instead it adopts the newer pico-mac code to patch the ROM to the desired screen resolution based on the build parameters. It is also built with the 208K RAM option which allows it to run MacPaint, but only when booted from a disk image on a micro-SD card. This is because the disk image contained in the pico-mac-nano firmware is read-only anbd MacPaint requires a writeable disk.
-
 Data sheets for the TFT module and the controller are in the data_sheets directory.
+
+The external, include and src folders contain the pico-mac-nano branch of the pico-mac source code, and are only needed if you plan to compile and build the firmware yourself.
 
 All the indivudial parts used in pico-mac-nano, or a full self-assemble kit are available on [1bitrainbow.com](https://www.1bitrainbow.com/parts-store.php?cPath=972_973). This includes the 3D printed case, the fully assembled custom PCB and the Pico Zero (pre-flashed with the latest pico-mac-nano firmware). 
 
@@ -98,13 +108,13 @@ Using a suitable inductor (the value will depend on the impedance of the speaker
 
 ## Battery Power Module
 
-The optional battery power module uses a 3v, non-rechargeable, lithium CR2 battery. As well as the 3D printed chassis and roicker switch, it incorporates a tiny 2A 5v step up module, a micro switch, a 2-pin female 2.54mm header socket, battery contacts and four interconnecting wires. If you want to build it yourself, all the individual or a full kit is available on [1bitrainbow.com](https://www.1bitrainbow.com/parts-store.php?cPath=972_973). There is an assembly video guide on our [YouTube channel](https://www.youtube.com/@1BitRainbow). Ready made units are also available on [1bitrainbow.com](https://www.1bitrainbow.com/parts-store.php?cPath=972_973_P4470).
+The optional battery power module uses a 3v, non-rechargeable, lithium CR2 battery. As well as the 3D printed chassis and rocker switch, it incorporates a tiny 2A 5v step up module, a micro switch, a 2-pin female 2.54mm header socket, battery contacts and four interconnecting wires. If you want to build it yourself, a full kit is available on [1bitrainbow.com](https://www.1bitrainbow.com/parts-store.php?cPath=972_973). There is an assembly video guide on our [YouTube channel](https://www.youtube.com/@1BitRainbow). Ready made units are also available on [1bitrainbow.com](https://www.1bitrainbow.com/parts-store.php?cPath=972_973_P4470).
 I suggest 3D printing the upper and lower battery module parts using PLA+ or PETG so it is stronger than if you printed in standard PLA.
 
 ## Box
 
-We originally offered the pre-assembled pico0mac-nano in a collectors edition which came in a replica of the original 'picasso' box complete with an accessory case and flexible top & bottom inserts. At Apple's request, we have stopped offering these but if you would like to make your own box, the .stl files to 3D print the inserts and accessory box and in the 3D_model folder. These are designed for a 75mm cube corrugated cardboard box. We used white TPU 95A filament for the inserts and white PLA for the accessory box. TPU can be tricky to print with and I found that we had to dry in a filament dryer for 12h before use and we kept it in the dryer while printing, feeding via ptfe tube all the way to the extruder. I tried many different TPU brands but found both GEEETECH and Overture to be the most reliable on our Bambu Lab A1 printers. We used both eSun basic white PLA nfor the accessory box which is a nice warm, solid white.
-The inserts and accessory box are available on [1bitrainbow.com](https://www.1bitrainbow.com/parts-store.php?cPath=972_973).
+I originally offered the pre-assembled pico-mac-nano in a collectors edition which came in a replica of the original 'picasso' box complete with an accessory case and flexible top & bottom inserts. At Apple's request, we have stopped offering these but if you would like to make your own box, the .stl files to 3D print the inserts and accessory box and in the 3D_model folder. These are designed for a 75mm cube corrugated cardboard box. We used white TPU 95A filament for the inserts and white PLA for the accessory box. TPU can be tricky to print with and I found that we had to dry in a filament dryer for 12h before use and we kept it in the dryer while printing, feeding via ptfe tube all the way to the extruder. I tried many different TPU brands but found Overture to be the most reliable on our Bambu Lab A1 printers. We used eSun basic white PLA for the accessory box which is a nice warm, solid white.
+Box kits including the inserts and accessory box are available on [1bitrainbow.com](https://www.1bitrainbow.com/parts-store.php?cPath=972_973).
 
 ## Disclaimer
 As with the pico-mac project, pico-mac-nano is a personal hobby project and proof of concept rather than a commercial product. My aim was to see how small I could make it and this involved some compromises. This project is provided with no warranty and has not been tested against any recognised safety standard. All due care has been taken in design/docs, but if you choose to build it then I disclaim any responsibility for your hardware or personal safety.
