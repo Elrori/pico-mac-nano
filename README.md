@@ -1,21 +1,6 @@
 # PATCH umac first
 
 ```sh
-hel@omo:~/workspace/pico-mac-nano/external/umac$ git diff src/disc.c
-diff --git a/src/disc.c b/src/disc.c
-index 8f513fb..1bd4958 100644
---- a/src/disc.c
-+++ b/src/disc.c
-@@ -23,7 +23,8 @@
- #endif
-
- #define DERR(...)       fprintf(stderr, __VA_ARGS__)
--
-+//#define DISP_WIDTH 480
-+//#define DISP_HEIGHT 342
- extern void umac_disc_ejected(void);
-
- // B2 decls:
 hel@omo:~/workspace/pico-mac-nano/external/umac$ git diff src/rom.c
 diff --git a/src/rom.c b/src/rom.c
 index 556c5ee..f177676 100644
