@@ -29,7 +29,7 @@ cmake_minimum_required(VERSION 3.13)
 # directory with cmake, e.g. "cmake .. -DOPTION=true":
 #
 
-option(PICO_ZERO "Running on WaveShare Pico Zero" false) 
+option(PICO_ZERO "Running on WaveShare Pico Zero" true) 
 
 option(USE_SD "Build in SD support" true)
 set(SD_TX 3 CACHE STRING "SD SPI TX pin")

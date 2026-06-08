@@ -90,9 +90,10 @@ static uint8_t umac_ram[RAM_SIZE];
 static void     io_init()
 {
 #if PICO_ZERO
-                PIO pio = pio1; /* Use PIO 1 as Vidio is using PIO 0 */
+                PIO pio = pio0; /* Use PIO 1 as Vidio is using PIO 0 */
                 uint offset = pio_add_program(pio, &ws2812_program);
-                uint sm = pio_claim_unused_sm(pio, true); //Claim a free state machine on a PIO instance
+                printf("offset:%d\n",offset);
+                uint sm = 1;//pio_claim_unused_sm(pio, true); //Claim a free state machine on a PIO instance
                 ws2812_program_init(pio, sm, offset, GPIO_LED_PIN, 800000, true); /* 800000 is frequency */
 #else
                 gpio_init(GPIO_LED_PIN);

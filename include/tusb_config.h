@@ -44,6 +44,7 @@
 // #else
 //   #define CFG_TUSB_RHPORT0_MODE       OPT_MODE_HOST
 // #endif
+
 #define CFG_TUD_ENABLED           1   // 原生 USB 作为 Device
 #define CFG_TUH_ENABLED           1   // PIO USB 作为 Host
 #define CFG_TUSB_RHPORT0_MODE     OPT_MODE_DEVICE// 端口 0 (Pico 原生 USB 口) 运行在 DEVICE (设备) 模式
