@@ -45,7 +45,7 @@ static  uint32_t urgb_u32(uint8_t r, uint8_t g, uint8_t b) {
 }
 
 static inline void put_pixel(uint8_t r, uint8_t g, uint8_t b ) {
-  pio_sm_put_blocking(pio1, 0, (urgb_u32(r, g, b) << 8u)); /* ws2812 takes 24 bit in order G R B. Shift 32bit value left 8 so data is in top 24 bits */
+  pio_sm_put_blocking(pio0, 1, (urgb_u32(r, g, b) << 8u)); /* ws2812 takes 24 bit in order G R B. Shift 32bit value left 8 so data is in top 24 bits */
 }
 
 void put_pixel_red(uint8_t val) {
