@@ -41,6 +41,7 @@
 #include "kbd.h"
 
 #include "bsp/rp2040/board.h"
+#include "pio_usb.h"
 #include "tusb.h"
 
 #include "umac.h"
@@ -291,7 +292,7 @@ static void     core1_main()
 
 int     main()
 {
-       set_sys_clock_khz(250*1000, true);
+       set_sys_clock_khz(240*1000, true);
 
 	stdio_init_all();
         io_init(); /* Just sets up the LED */
@@ -309,7 +310,12 @@ int     main()
         multicore_launch_core1(core1_main);
 
 	printf("Starting, init usb\n");
-        tusb_init();
+        static pio_usb_configuration_t pio_cfg = PIO_USB_DEFAULT_CONFIG;
+        pio_cfg.pin_dp = 6;
+        pio_cfg.pio_tx_num = 1;   // 使用 PIO1 进行发送
+        pio_cfg.pio_rx_num = 1;   // 使用 PIO1 进行接收
+        tuh_configure(1, TUH_CFGID_RPI_PIO_USB_CONFIGURATION, &pio_cfg);
+        tusb_init(1);
 
         /* This happens on core 0: */
 	while (true) {

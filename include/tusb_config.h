@@ -39,14 +39,20 @@
   #error CFG_TUSB_MCU must be defined
 #endif
 
-#if CFG_TUSB_MCU == OPT_MCU_LPC43XX || CFG_TUSB_MCU == OPT_MCU_LPC18XX || CFG_TUSB_MCU == OPT_MCU_MIMXRT10XX
-  #define CFG_TUSB_RHPORT0_MODE       (OPT_MODE_HOST | OPT_MODE_HIGH_SPEED)
-#else
-  #define CFG_TUSB_RHPORT0_MODE       OPT_MODE_HOST
-#endif
+// #if CFG_TUSB_MCU == OPT_MCU_LPC43XX || CFG_TUSB_MCU == OPT_MCU_LPC18XX || CFG_TUSB_MCU == OPT_MCU_MIMXRT10XX
+//   #define CFG_TUSB_RHPORT0_MODE       (OPT_MODE_HOST | OPT_MODE_HIGH_SPEED)
+// #else
+//   #define CFG_TUSB_RHPORT0_MODE       OPT_MODE_HOST
+// #endif
+#define CFG_TUD_ENABLED           1   // 原生 USB 作为 Device
+#define CFG_TUH_ENABLED           1   // PIO USB 作为 Host
+#define CFG_TUSB_RHPORT0_MODE     OPT_MODE_DEVICE// 端口 0 (Pico 原生 USB 口) 运行在 DEVICE (设备) 模式
+#define CFG_TUSB_RHPORT1_MODE     OPT_MODE_HOST// 端口 1 (PIO-USB 软件模拟口) 运行在 HOST (主机) 模式
+#define CFG_TUH_RPI_PIO_USB       1   // 启用 PIO USB 支持
+#define BOARD_TUH_RHPORT          1   // PIO USB on Port 1
 
 #ifndef CFG_TUSB_OS
-#define CFG_TUSB_OS                 OPT_OS_NONE
+#define CFG_TUSB_OS                 OPT_OS_PICO
 #endif
 
 // CFG_TUSB_DEBUG is defined by compiler in DEBUG build

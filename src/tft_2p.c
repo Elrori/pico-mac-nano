@@ -30,14 +30,13 @@
 #include "hardware/clocks.h"
 #include "hardware/gpio.h"
 #include "hw.h"
-#include "ws2812.h" /* Needed for neo-pixel LED */
 #include "tft_2p.h"
 
 // TFT SPI Write command
 static void tft_write_com(unsigned char comm) {
 	static int i;
 
-    put_pixel_red(1);
+    
     gpio_put(TFT_SPI_CS, 0); // Chip select enabled
     gpio_put(TFT_SPI_MOSI, 0);
     gpio_put(TFT_SPI_CLK, 0);
@@ -56,14 +55,14 @@ static void tft_write_com(unsigned char comm) {
         comm<<=1;
     }
     gpio_put(TFT_SPI_CS, 1); // Chip select disabled
-    put_pixel_red(0);
+    
 }
 
 // SPI Write Data
 static void tft_write_dat(unsigned char datt) {
     static int j;
 
-    put_pixel_red(1);
+    
     gpio_put(TFT_SPI_CS, 0); // Chip select enabled
 
     // First send a 1 for bit 9
@@ -85,7 +84,7 @@ static void tft_write_dat(unsigned char datt) {
     }
 
     gpio_put(TFT_SPI_CS, 1); // Chip select disabled
-    put_pixel_red(0);
+    
 }
 
 void tft_init() {

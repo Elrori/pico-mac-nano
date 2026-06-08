@@ -29,7 +29,7 @@ cmake_minimum_required(VERSION 3.13)
 # directory with cmake, e.g. "cmake .. -DOPTION=true":
 #
 
-option(PICO_ZERO "Running on WaveShare Pico Zero" true) 
+option(PICO_ZERO "Running on WaveShare Pico Zero" false) 
 
 option(USE_SD "Build in SD support" true)
 set(SD_TX 3 CACHE STRING "SD SPI TX pin")
@@ -44,9 +44,12 @@ set(TFT_SPI_CLK 2 CACHE STRING "TFT SPI SCK pin")
 set(TFT_SPI_CS 14 CACHE STRING "TFT SPI CS pin")
 set(TFT_RESET 15 CACHE STRING "TFT hard reset pin")
 
-option(BEEP "Generate startup Beep" true) 
+option(BEEP "Generate startup Beep" false) 
 set(GPIO_AUDIO 10 CACHE STRING "Audio signal out pin")
 set(GPIO_AUDIO_INV 11 CACHE STRING "Inverse of audio signal out pin")
+
+option(PIOUSB_HOST "PIO USB-A Port" true) 
+set(PIOUSB_HOST_DP 10 CACHE STRING "USB D+")
 
 # See below, -DMEMSIZE=<size in KB> will configure umac's memory size,
 # overriding defaults.
@@ -125,7 +128,15 @@ if (TARGET tinyusb_device)
     ${EXTRA_SD_SRC}
 
     ${UMAC_SOURCES}
+    ${TINYUSB_PATH}/src/portable/raspberrypi/pio_usb/dcd_pio_usb.c
+    ${TINYUSB_PATH}/src/portable/raspberrypi/pio_usb/hcd_pio_usb.c
   )
+
+if (PIOUSB_HOST)
+   set(PICO_PIO_USB_PATH "${CMAKE_CURRENT_LIST_DIR}/external/pico-pio-usb")
+   add_subdirectory(${PICO_PIO_USB_PATH} pico_pio_usb)
+   target_compile_definitions(firmware PRIVATE PIO_USB_USE_TINYUSB)
+endif()
 
   # The umac sources need to prepare Musashi (some sources are generated):
   add_custom_command(OUTPUT ${UMAC_MUSASHI_PATH}/m68kops.c
@@ -140,6 +151,8 @@ if (TARGET tinyusb_device)
   target_link_libraries(firmware
     pico_stdlib
     pico_multicore
+    pico_pio_usb
+    tinyusb_device
     tinyusb_host
     tinyusb_board
     hardware_dma
