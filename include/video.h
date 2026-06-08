@@ -29,5 +29,6 @@
 #include <inttypes.h>
 
 void    video_init(uint32_t *framebuffer);
-
+#define DISP_WIDTH 480
+#define DISP_HEIGHT 342
 #endif

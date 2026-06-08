@@ -68,7 +68,7 @@
 #define VIDEO_V_VIS_START       (VIDEO_VSW + VIDEO_VBP)
 #define VIDEO_V_VIS_END         (VIDEO_V_VIS_START + VIDEO_VRES)
 
-#define VIDEO_FB_HRES           512 /* changed from 512 */
+#define VIDEO_FB_HRES           480 /* changed from 512 */
 #define VIDEO_FB_VRES           342
 
 /* The lines at which the FB data is actively output: */
@@ -188,8 +188,10 @@ static void     video_prep_buffer()
         unsigned int porch_padding = (VIDEO_HRES - VIDEO_FB_HRES)/2;
         // FIXME: HBP/HFP are prob off by one or so, check
         uint32_t timing = ((VIDEO_HSW - 1) << 23) |
-                ((VIDEO_HBP + porch_padding - 3) << 15) |
-                ((VIDEO_HFP + porch_padding - 4) << 7);
+                ((VIDEO_HBP-19) << 15) |
+                ((VIDEO_HFP+19) << 7);  
+//                ((VIDEO_HBP + porch_padding - 3) << 15) |
+//                ((VIDEO_HFP + porch_padding - 4) << 7);
         video_dma_cfg[0] = timing | 0x80000000;
         video_dma_cfg[1] = VIDEO_FB_HRES - 1;
         video_dma_cfg[2] = timing;
