@@ -1,3 +1,36 @@
+# PATCH umac first
+
+```sh
+hel@omo:~/workspace/pico-mac-nano/external/umac$ git diff src/disc.c
+diff --git a/src/disc.c b/src/disc.c
+index 8f513fb..1bd4958 100644
+--- a/src/disc.c
++++ b/src/disc.c
+@@ -23,7 +23,8 @@
+ #endif
+
+ #define DERR(...)       fprintf(stderr, __VA_ARGS__)
+-
++//#define DISP_WIDTH 480
++//#define DISP_HEIGHT 342
+ extern void umac_disc_ejected(void);
+
+ // B2 decls:
+hel@omo:~/workspace/pico-mac-nano/external/umac$ git diff src/rom.c
+diff --git a/src/rom.c b/src/rom.c
+index 556c5ee..f177676 100644
+--- a/src/rom.c
++++ b/src/rom.c
+@@ -44,7 +44,8 @@
+ #define ROM_PLUSv3_SONYDRV      0x17d30
+
+ #define M68K_INST_NOP           0x4e71
+-
++#define DISP_WIDTH 480
++#define DISP_HEIGHT 342
+
+```
+
 # pico-mac-nano
 
 <img alt="pico-mac-nano" src="https://github.com/user-attachments/assets/d9a80395-f821-47a4-9e62-aa7472d8036d" height="160px" />
